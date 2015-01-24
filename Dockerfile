@@ -2,7 +2,7 @@
 #   docker build -t subicura/nginx-confd .
 #
 # docker run
-#   docker run --rm -p 80:80 -v ~/nginx:/etc/confd subicura/nginx-confd /bin/bash
+#   docker run --rm -p 80:80 -p 8080:8080 subicura/nginx-confd
 
 FROM ubuntu:14.04
 MAINTAINER subicura@subicura.com

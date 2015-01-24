@@ -1,5 +1,5 @@
 {{ if ls "/services/fleet-ui" }}
-upstream backend  {
+upstream backend_fleet_ui  {
 {{range getvs "/services/fleet-ui/*"}}
     server {{.}};
 {{end}}
@@ -10,7 +10,24 @@ server {
 
     location / {
         include /etc/nginx/proxy_params;
-        proxy_pass http://backend;
+        proxy_pass http://backend_fleet_ui;
+    }
+}
+{{ end }}
+
+{{ if ls "/services/sample-go-server" }}
+upstream backend_sample  {
+{{range getvs "/services/sample-go-server/*"}}
+    server {{.}};
+{{end}}
+}
+
+server {
+    listen      8080;
+
+    location / {
+        include /etc/nginx/proxy_params;
+        proxy_pass http://backend_sample;
     }
 }
 {{ end }}
