@@ -1,0 +1,16 @@
+{{ if ls "/services/fleet-ui" }}
+upstream backend  {
+{{range getvs "/services/fleet-ui/*"}}
+    server {{.}};
+{{end}}
+}
+
+server {
+    listen      80;
+
+    location / {
+        include /etc/nginx/proxy_params;
+        proxy_pass http://backend;
+    }
+}
+{{ end }}
