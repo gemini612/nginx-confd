@@ -1,0 +1,37 @@
+[Unit]
+Description=%p %i
+
+Requires=etcd.service
+Requires=docker.service
+After=etcd.service
+After=docker.service
+
+[Service]
+TimeoutStartSec=0
+
+KillMode=none
+
+Restart=always
+RestartSec=10s
+
+EnvironmentFile=/etc/environment
+Environment="SERVICE_NAME=%p-%i"
+Environment="SERVICE_IMAGE_URL=progrium/registrator"
+
+ExecStartPre=-/usr/bin/docker kill $SERVICE_NAME
+ExecStartPre=-/usr/bin/docker rm $SERVICE_NAME
+ExecStartPre=/usr/bin/docker pull $SERVICE_IMAGE_URL
+
+ExecStart=/usr/bin/docker run --rm \
+          --name ${SERVICE_NAME} \
+          -v /var/run/docker.sock:/tmp/docker.sock \
+          -h %H \
+          ${SERVICE_IMAGE_URL} \
+          -ip ${COREOS_PRIVATE_IPV4} \
+          etcd://${COREOS_PRIVATE_IPV4}:4001/services
+
+ExecStop=/usr/bin/docker stop $SERVICE_NAME
+
+[X-Fleet]
+Global=true
+
