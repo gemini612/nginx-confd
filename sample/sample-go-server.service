@@ -15,7 +15,7 @@ RestartSec=10s
 EnvironmentFile=/etc/environment
 
 Environment="SERVICE_NAME=%p-%i"
-Environment="SERVICE_IMAGE_URL=purpleworks/fleet-ui"
+Environment="SERVICE_IMAGE_URL=subicura/sample-go-server"
 
 ExecStartPre=-/usr/bin/docker kill $SERVICE_NAME
 ExecStartPre=-/usr/bin/docker rm $SERVICE_NAME
@@ -23,7 +23,6 @@ ExecStartPre=/usr/bin/docker pull $SERVICE_IMAGE_URL
 
 ExecStart=/usr/bin/docker run --rm \
           --name ${SERVICE_NAME} \
-          -v /home/core/.ssh/id_rsa:/root/id_rsa \
           -P \
           ${SERVICE_IMAGE_URL} 
 
