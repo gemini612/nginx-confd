@@ -6,7 +6,9 @@ upstream backend_{{ base $dir }} {
 }
 
 server {
+    listen      80;
     server_name {{ base $dir }}.sample.com;
+    
     location / {
         nclude /etc/nginx/proxy_params;
         proxy_pass http://backend_{{base $dir}};
