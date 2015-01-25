@@ -35,3 +35,4 @@ ExecStop=/usr/bin/docker stop $SERVICE_NAME
 
 [X-Fleet]
 Global=true
+MachineMetadata=type=app
