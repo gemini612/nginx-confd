@@ -19,7 +19,7 @@ RUN \
 # install confd
 RUN \
   mkdir -p /app && \
-  curl -s -L -o /app/confd https://github.com/kelseyhightower/confd/releases/download/v0.7.1/confd-0.7.1-linux-amd64 && \
+  curl -s -L -o /app/confd https://github.com/kelseyhightower/confd/releases/download/v0.10.0/confd-0.10.0-linux-amd64 && \
   chmod +x /app/confd
 
 # install nginx
